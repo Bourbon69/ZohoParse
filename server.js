@@ -18,14 +18,12 @@ app.get('/:mobile',  async(req, res) => {
 
 app.post('/sendrecipe', async (req, res) => {
   try {
-    let { data } = req.body;
+    const { data } = req.body;
 
-    data = data.replaceAll("\\", "");
-    data = data.replaceAll("{", "").replaceAll("}", "");
-    const dataArray = data.split(",");
+    const parsedData = JSON.parse(data);
 
-    let recipe_id = dataArray[0];
-    let activation_id = dataArray[1];
+    const recipe_id = parsedData.recipe_id;
+    const activation_id = parsedData.activation_id;
 
     res.status(200).json({ recipe_id: recipe_id, activation_id: activation_id });
   } catch (error) {
