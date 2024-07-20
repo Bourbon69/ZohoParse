@@ -16,21 +16,24 @@ app.get('/:mobile',  async(req, res) => {
    }
 })
 
-app.post('/sendrecipe',  async(req, res) => {
-   try {
-    const {data} = req.body
-      data.replaceAll("\","");
-      data.replaceAll("{","")
-      data.replaceAll("}","")
-      data.split(",");
-      let recipe_id = data[0];
-      let activation_id = data[1];
-      
-    res.status(200).json({"output": "recipe_id: recipe_id, "activation_id": activation_id });
-   } catch (error) {
-    console.log(error)
-   }
-})
+app.post('/sendrecipe', async (req, res) => {
+  try {
+    let { data } = req.body;
+
+    data = data.replaceAll("\\", "");
+    data = data.replaceAll("{", "").replaceAll("}", "");
+    const dataArray = data.split(",");
+
+    let recipe_id = dataArray[0];
+    let activation_id = dataArray[1];
+
+    res.status(200).json({ recipe_id: recipe_id, activation_id: activation_id });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "An error occurred" });
+  }
+});
+
 
 
 app.listen(3000, ()=>{
