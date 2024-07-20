@@ -20,12 +20,20 @@ app.post('/sendrecipe', async (req, res) => {
   try {
     const { data } = req.body;
 
-    const parsedData = JSON.parse(data);
-
-    const recipe_id = parsedData.recipe_id;
-    const activation_id = parsedData.activation_id;
-
-    res.status(200).json({ recipe_id: recipe_id, activation_id: activation_id });
+     if(data == "Invalid recipe number"){
+        res.send(200).json("Invalid recipe number")
+        return
+     }
+     else{
+          
+          const parsedData = JSON.parse(data);
+      
+          const recipe_id = parsedData.recipe_id;
+          const activation_id = parsedData.activation_id;
+      
+          res.status(200).json({ recipe_id: recipe_id, activation_id: activation_id });
+     }
+   
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "An error occurred" });
